@@ -24,7 +24,7 @@ public class Benchmark01 {
             return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
-            return "Error reading file: " + e.getMessage();
+            return "Error reading file: ";
         }
     }
 }

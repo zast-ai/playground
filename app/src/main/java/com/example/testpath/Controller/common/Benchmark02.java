@@ -38,7 +38,7 @@ public class Benchmark02 {
             return ResponseEntity.ok(content);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error reading file: " + e.getMessage());
+                    .body("Error reading file: ");
         }
     }
 }
