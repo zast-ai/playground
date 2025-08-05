@@ -1,0 +1,29 @@
+{
+  "name": "Java Spring Boot Development",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  
+  "forwardPorts": [8083],
+  
+  "postCreateCommand": "mvn clean install -DskipTests",
+  
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "pivotal.vscode-boot-dev-pack",
+        "ms-vscode.docker",
+        "ms-azuretools.vscode-docker"
+      ],
+      "settings": {
+        "java.home": "/usr/lib/jvm/java-8-openjdk-amd64",
+        "java.configuration.updateBuildConfiguration": "automatic",
+        "maven.executable.path": "/usr/bin/mvn",
+        "java.compile.nullAnalysis.mode": "automatic"
+      }
+    }
+  },
+  
+  "remoteUser": "vscode"
+}
