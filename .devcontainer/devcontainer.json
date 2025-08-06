@@ -1,21 +1,38 @@
 {
   "name": "Java Spring Boot Development",
-  "dockerComposeFile": "docker-compose.yml",
+  "dockerComposeFile": "../docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspace",
   
-  "forwardPorts": [8083],
-  
-  "postCreateCommand": "mvn clean install -DskipTests",
-  "initializeCommand": "docker-compose up -d",
-  
+  "forwardPorts": [8083, 3306],
+  "portsAttributes": {
+    "8083": {
+      "label": "Spring Boot App",
+      "onAutoForward": "notify"
+    },
+    "3306": {
+      "label": "MySQL Database"
+    }
+  },
+
+  "initializeCommand": "docker-compose up -d mysql",
+  "postCreateCommand": [
+    "bash", "-c", 
+    "chmod +x .devcontainer/*.sh && echo 'Building project...' && mvn clean install -DskipTests"
+  ],
+  "postStartCommand": [
+    "bash", "-c",
+    "/workspace/.devcontainer/startup.sh"
+  ],
+
   "customizations": {
     "vscode": {
       "extensions": [
         "vscjava.vscode-java-pack",
         "pivotal.vscode-boot-dev-pack",
         "ms-vscode.docker",
-        "ms-azuretools.vscode-docker"
+        "ms-azuretools.vscode-docker",
+        "ms-vscode.vscode-json"
       ],
       "settings": {
         "java.home": "/usr/lib/jvm/java-8-openjdk-amd64",
@@ -23,6 +40,12 @@
         "maven.executable.path": "/usr/bin/mvn",
         "java.compile.nullAnalysis.mode": "automatic"
       }
+    },
+    "codespaces": {
+      "openFiles": [
+        "README.md",
+        "app/src/main/java/com/example/testpath/TestPathApplication.java"
+      ]
     }
   },
   
