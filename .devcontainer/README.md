@@ -62,6 +62,18 @@ cd app && mvn spring-boot:run
 
 ## 🐛 故障排除
 
+### Codespaces 启动错误 "Starting directory does not exist"
+
+如果在 GitHub Codespaces 中遇到工作目录不存在的错误：
+
+1. **检查配置一致性**：
+   - `devcontainer.json` 中的 `workspaceFolder` 必须与 `docker-compose.yml` 中的卷挂载路径匹配
+   - 当前配置：`/workspace`
+
+2. **脚本使用动态路径检测**：
+   - 所有脚本自动检测项目根目录，不依赖硬编码路径
+   - 即使目录结构改变也能正常工作
+
 ### 应用启动失败
 
 1. 检查 MySQL 是否正常运行：
