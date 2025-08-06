@@ -28,7 +28,6 @@ services:
       - "8083:8083"
     volumes:
       - .:/workspace
-      - /workspace/app/target:/workspace/app/target
     environment:
       - SERVER_PORT=8083
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/testpath?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC

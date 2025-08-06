@@ -2,6 +2,10 @@
 
 echo "🚀 Starting development environment..."
 
+# Get project root directory (parent of .devcontainer)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+
 # Wait for MySQL to be ready
 echo "⏳ Waiting for MySQL database to be ready..."
 until nc -z mysql 3306; do
@@ -18,17 +22,17 @@ export SPRING_DATASOURCE_PASSWORD="root"
 
 # Start Spring Boot application
 echo "🌱 Starting Spring Boot application..."
-cd /workspace/app
+cd "$PROJECT_ROOT/app"
 
 # Run in background and save PID
-nohup mvn spring-boot:run > /workspace/app.log 2>&1 &
+nohup mvn spring-boot:run > "$PROJECT_ROOT/app.log" 2>&1 &
 APP_PID=$!
-echo $APP_PID > /workspace/app.pid
+echo $APP_PID > "$PROJECT_ROOT/app.pid"
 
 echo "✅ Spring Boot application started with PID: $APP_PID"
 echo "📱 Application will be available at: https://YOUR_CODESPACE_NAME-8083.app.github.dev"
-echo "📋 Check logs: tail -f /workspace/app.log"
-echo "🛑 Stop app: kill \$(cat /workspace/app.pid)"
+echo "📋 Check logs: tail -f $PROJECT_ROOT/app.log"
+echo "🛑 Stop app: kill \$(cat $PROJECT_ROOT/app.pid)"
 
 # Show some useful commands
 echo ""
