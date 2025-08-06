@@ -2,28 +2,26 @@ FROM mcr.microsoft.com/devcontainers/java:8
 
 USER root
 
+# Install essential development tools
 RUN apt-get update && apt-get install -y \
     maven \
     git \
     curl \
     wget \
+    netcat \
+    mysql-client \
     && rm -rf /var/lib/apt/lists/*
 
-RUN wget -qO - https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.gpg \
-    && echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list
-
-RUN apt-get update && apt-get install -y code \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN curl -fsSL https://get.docker.com -o get-docker.sh \
-    && sh get-docker.sh \
-    && rm get-docker.sh
-
-RUN usermod -aG docker vscode
-
+# Set up Maven directory and settings
 RUN mkdir -p /home/vscode/.m2 && chown vscode:vscode /home/vscode/.m2
 
-COPY settings.xml /home/vscode/.m2/settings.xml
-RUN chown vscode:vscode /home/vscode/.m2/settings.xml
+# Copy Maven settings if available
+COPY settings.xml /home/vscode/.m2/settings.xml 2>/dev/null || echo "No Maven settings.xml found, skipping..."
+RUN chown -R vscode:vscode /home/vscode/.m2 2>/dev/null || true
 
+# Switch to vscode user
 USER vscode
+
+# Set Java environment variables
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+ENV PATH=$JAVA_HOME/bin:$PATH

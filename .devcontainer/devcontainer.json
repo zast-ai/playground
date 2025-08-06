@@ -1,6 +1,6 @@
 {
   "name": "Java Spring Boot Development",
-  "dockerComposeFile": "../docker-compose.yml",
+  "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspace",
   
@@ -15,7 +15,7 @@
     }
   },
 
-  "initializeCommand": "docker-compose up -d mysql",
+  // MySQL is started automatically via depends_on in docker-compose.yml
   "postCreateCommand": [
     "bash", "-c", 
     "chmod +x .devcontainer/*.sh && echo 'Building project...' && cd ${containerWorkspaceFolder}/app && mvn clean install -DskipTests"

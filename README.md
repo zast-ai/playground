@@ -81,6 +81,22 @@ kill $(cat app.pid)
 - **Build**: Maven
 - **Container**: Docker & Docker Compose
 
+## 🏗 项目架构
+
+### Docker 配置说明
+
+项目包含两套 Docker 配置，分别用于不同环境：
+
+**开发环境**（Codespaces/Dev Container）：
+- 配置：`.devcontainer/docker-compose.yml` + `.devcontainer/Dockerfile`
+- 特点：包含开发工具、vscode 用户、完整 Java 环境
+- 用途：GitHub Codespaces、VS Code Dev Container
+
+**生产环境**：
+- 配置：`docker-compose.yml` + `app/Dockerfile`
+- 特点：精简镜像、多阶段构建、只含运行时
+- 用途：生产部署、本地快速启动
+
 ## 🐛 故障排除
 
 详细的故障排除指南请参考：[Dev Container README](.devcontainer/README.md)

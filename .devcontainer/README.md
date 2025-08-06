@@ -62,7 +62,18 @@ cd app && mvn spring-boot:run
 
 ## 🐛 故障排除
 
-### Codespaces 启动错误 "Starting directory does not exist"
+### Codespaces 启动错误
+
+#### "Unable to find user vscode" 错误
+
+这个错误通常是因为 Docker 配置冲突：
+
+**解决方案**：
+- 使用专门的开发环境配置：`.devcontainer/docker-compose.yml` 
+- 开发环境使用 `.devcontainer/Dockerfile`（包含 vscode 用户）
+- 生产环境使用 `./app/Dockerfile`（精简运行环境）
+
+#### "Starting directory does not exist" 错误
 
 如果在 GitHub Codespaces 中遇到工作目录不存在的错误：
 
