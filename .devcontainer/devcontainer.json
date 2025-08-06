@@ -1,12 +1,13 @@
 {
   "name": "Java Spring Boot Development",
-  "dockerComposeFile": "docker-compose.yml",
+  "dockerComposeFile": "../docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspace",
   
   "forwardPorts": [8083],
   
-  "postCreateCommand": "mvn clean install -DskipTests",
+  "postCreateCommand": "cd /workspace/app && mvn clean install -DskipTests",
+  "initializeCommand": "docker-compose up -d",
   
   "customizations": {
     "vscode": {
