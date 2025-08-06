@@ -18,7 +18,7 @@ export SPRING_DATASOURCE_PASSWORD="root"
 
 # Start Spring Boot application
 echo "🌱 Starting Spring Boot application..."
-cd /workspace
+cd /workspace/app
 
 # Run in background and save PID
 nohup mvn spring-boot:run > /workspace/app.log 2>&1 &

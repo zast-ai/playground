@@ -15,7 +15,7 @@ fi
 
 # Start application
 echo "🌱 Starting Spring Boot application..."
-cd /workspace
+cd /workspace/app
 
 export SPRING_DATASOURCE_URL="jdbc:mysql://mysql:3306/testpath?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
 export SPRING_DATASOURCE_USERNAME="root"

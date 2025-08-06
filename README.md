@@ -55,6 +55,12 @@ tail -f app.log
 # 重启应用
 ./restart-app.sh
 
+# 手动构建项目
+cd app && mvn clean install
+
+# 手动启动应用
+cd app && mvn spring-boot:run
+
 # 连接数据库
 docker-compose exec mysql mysql -u root -proot testpath
 

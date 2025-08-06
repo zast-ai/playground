@@ -52,6 +52,12 @@ docker-compose exec mysql mysql -u root -proot testpath
 
 # 查看数据库日志
 docker-compose logs mysql
+
+# 手动构建项目
+cd app && mvn clean install
+
+# 手动启动应用
+cd app && mvn spring-boot:run
 ```
 
 ## 🐛 故障排除

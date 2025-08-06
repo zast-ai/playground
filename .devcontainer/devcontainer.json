@@ -18,7 +18,7 @@
   "initializeCommand": "docker-compose up -d mysql",
   "postCreateCommand": [
     "bash", "-c", 
-    "chmod +x .devcontainer/*.sh && echo 'Building project...' && mvn clean install -DskipTests"
+    "chmod +x .devcontainer/*.sh && echo 'Building project...' && cd /workspace/app && mvn clean install -DskipTests"
   ],
   "postStartCommand": [
     "bash", "-c",
