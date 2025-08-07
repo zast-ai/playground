@@ -3,23 +3,22 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspaces/demo-playground",
+  
   "forwardPorts": [8083],
   "portsAttributes": {
     "8083": {
       "label": "Spring Boot App",
-      "onAutoForward": "notify"
+      "onAutoForward": "openBrowser"
     }
   },
 
-  // MySQL is started automatically via depends_on in docker-compose.yml
-  "postCreateCommand": [
-    "bash", "-c", 
-    "chmod +x .devcontainer/*.sh && echo 'Building project...' && cd app && mvn clean install -DskipTests"
-  ],
-  "postStartCommand": [
-    "bash", "-c",
-    "./.devcontainer/startup.sh"
-  ],
+  "postCreateCommand": {
+    "build-project": "cd app && mvn clean install -DskipTests"
+  },
+  
+  "postStartCommand": {
+    "start-app": "echo 'Waiting for environment...' && sleep 10 && ./.devcontainer/startup.sh"
+  },
 
   "customizations": {
     "vscode": {
