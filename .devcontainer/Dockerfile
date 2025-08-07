@@ -2,20 +2,10 @@ FROM mcr.microsoft.com/devcontainers/java:8
 
 USER root
 
-# Install essential development tools
-RUN apt-get update && apt-get install -y \
-    maven \
-    git \
-    curl \
-    wget \
-    netcat \
-    mysql-client \
-    && rm -rf /var/lib/apt/lists/*
-
 # Set up Maven directory and settings
 RUN mkdir -p /home/vscode/.m2 && chown vscode:vscode /home/vscode/.m2
 
-# Copy Maven settings if available
+# Copy Maven settings
 COPY settings.xml /home/vscode/.m2/settings.xml
 RUN chown -R vscode:vscode /home/vscode/.m2
 
