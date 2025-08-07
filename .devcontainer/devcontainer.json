@@ -3,15 +3,11 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspaces/demo-playground",
-  
-  "forwardPorts": [8083, 3306],
+  "forwardPorts": [8083],
   "portsAttributes": {
     "8083": {
       "label": "Spring Boot App",
       "onAutoForward": "notify"
-    },
-    "3306": {
-      "label": "MySQL Database"
     }
   },
 
@@ -43,8 +39,7 @@
     },
     "codespaces": {
       "openFiles": [
-        "README.md",
-        "app/src/main/java/com/example/testpath/TestPathApplication.java"
+        "README.md"
       ]
     }
   },
