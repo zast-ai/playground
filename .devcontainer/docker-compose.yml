@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ..:/workspace:cached
+      - ..:/workspaces/demo-playground:cached
     command: sleep infinity
     environment:
       - JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
@@ -26,14 +26,14 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: testpath
     ports:
-      - "3306:3306"
+      - '3306:3306'
     volumes:
       - mysql-data:/var/lib/mysql
       - ../app/src/main/resources/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - dev-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
       interval: 10s
       timeout: 5s
       retries: 5

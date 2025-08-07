@@ -19,9 +19,16 @@ RUN mkdir -p /home/vscode/.m2 && chown vscode:vscode /home/vscode/.m2
 COPY settings.xml /home/vscode/.m2/settings.xml 2>/dev/null || echo "No Maven settings.xml found, skipping..."
 RUN chown -R vscode:vscode /home/vscode/.m2 2>/dev/null || true
 
+# Create workspace directory structure
+RUN mkdir -p /workspaces/demo-playground && \
+    chown -R vscode:vscode /workspaces
+
 # Switch to vscode user
 USER vscode
 
 # Set Java environment variables
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ENV PATH=$JAVA_HOME/bin:$PATH
+
+# Set working directory
+WORKDIR /workspaces/demo-playground
