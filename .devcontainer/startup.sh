@@ -8,12 +8,17 @@ PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 
 # Wait for MySQL to be ready
 echo "⏳ Waiting for MySQL database to be ready..."
-until nc -z mysql 3306; do
-  echo "MySQL is not ready yet. Waiting..."
+for i in {1..30}; do
+  if timeout 1 bash -c "</dev/tcp/mysql/3306" 2>/dev/null; then
+    echo "✅ MySQL is ready!"
+    break
+  fi
+  echo "MySQL is not ready yet. Waiting... (attempt $i/30)"
   sleep 2
 done
 
-echo "✅ MySQL is ready!"
+# Continue even if MySQL check times out
+echo "Proceeding with application startup..."
 
 # Set environment variables for database connection
 export SPRING_DATASOURCE_URL="jdbc:mysql://mysql:3306/testpath?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
