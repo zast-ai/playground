@@ -16,8 +16,8 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p /home/vscode/.m2 && chown vscode:vscode /home/vscode/.m2
 
 # Copy Maven settings if available
-COPY settings.xml /home/vscode/.m2/settings.xml 2>/dev/null || echo "No Maven settings.xml found, skipping..."
-RUN chown -R vscode:vscode /home/vscode/.m2 2>/dev/null || true
+COPY settings.xml /home/vscode/.m2/settings.xml
+RUN chown -R vscode:vscode /home/vscode/.m2
 
 # Create workspace directory structure
 RUN mkdir -p /workspaces/demo-playground && \
