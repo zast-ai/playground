@@ -1,139 +1,141 @@
-# GitHub Codespaces 自动启动配置
+# GitHub Codespaces Auto-Start Configuration
 
-本配置支持在 GitHub Codespaces 中自动启动 Spring Boot 项目和 MySQL 数据库。
+This configuration supports the automatic startup of a Spring Boot project and a MySQL database in GitHub Codespaces.
 
-## 🚀 自动启动流程
+## 🚀 Auto-Start Flow
 
-1. **初始化阶段** - 启动 MySQL 数据库容器
-2. **创建阶段** - 构建 Maven 项目
-3. **启动阶段** - 自动启动 Spring Boot 应用
+1.  **Initialization Phase** - Start the MySQL database container.
+2.  **Creation Phase** - Build the Maven project.
+3.  **Startup Phase** - Automatically start the Spring Boot application.
 
-## 📱 访问应用
+## 📱 Accessing the Application
 
-启动完成后，应用将在端口 8083 上运行：
+Once started, the application will be running on port 8083:
 
-- **本地开发**: http://localhost:8083
+- **Local Development**: http://localhost:8083
 - **Codespaces**: https://YOUR_CODESPACE_NAME-8083.app.github.dev
 
-## 🔧 管理命令
+## 🔧 Management Commands
 
-### 查看应用状态
+### Check Application Status
 
 ```bash
-# 查看应用日志
+# View application logs
 tail -f app.log
 
-# 检查进程状态
+# Check process status
 ps aux | grep java
 ```
 
-### 重启应用
+### Restart the Application
 
 ```bash
-# 使用重启脚本
+# Use the restart script
 ./restart-app.sh
 
-# 或手动重启
+# Or restart manually
 kill $(cat app.pid)
 mvn spring-boot:run
 ```
 
-### 停止应用
+### Stop the Application
 
 ```bash
 kill $(cat app.pid)
 ```
 
-### 数据库管理
+### Database Management
 
 ```bash
-# 连接数据库
+# Connect to the database
 docker-compose exec mysql mysql -u root -proot testpath
 
-# 查看数据库日志
+# View database logs
 docker-compose logs mysql
 
-# 手动构建项目
+# Build the project manually
 cd app && mvn clean install
 
-# 手动启动应用
+# Start the application manually
 cd app && mvn spring-boot:run
 ```
 
-## 🐛 故障排除
+## 🐛 Troubleshooting
 
-### Codespaces 启动错误
+### Codespaces Startup Errors
 
-#### "Unable to find user vscode" 错误
+#### "Unable to find user vscode" Error
 
-这个错误通常是因为 Docker 配置冲突：
+This error is usually due to a Docker configuration conflict:
 
-**解决方案**：
-- 使用专门的开发环境配置：`.devcontainer/docker-compose.yml` 
-- 开发环境使用 `.devcontainer/Dockerfile`（包含 vscode 用户）
-- 生产环境使用 `./app/Dockerfile`（精简运行环境）
+**Solution**:
 
-#### "Starting directory does not exist" 错误
+- Use a dedicated development environment configuration: `.devcontainer/docker-compose.yml`
+- The development environment uses `.devcontainer/Dockerfile` (which includes the `vscode` user).
+- The production environment uses `./app/Dockerfile` (a streamlined runtime environment).
 
-如果在 GitHub Codespaces 中遇到工作目录不存在的错误：
+#### "Starting directory does not exist" Error
 
-1. **检查配置一致性**：
-   - `devcontainer.json` 中的 `workspaceFolder` 必须与 `docker-compose.yml` 中的卷挂载路径匹配
-   - 当前配置：`/workspace`
+If you encounter a "workspace directory does not exist" error in GitHub Codespaces:
 
-2. **脚本使用动态路径检测**：
-   - 所有脚本自动检测项目根目录，不依赖硬编码路径
-   - 即使目录结构改变也能正常工作
+1.  **Check Configuration Consistency**:
 
-### 应用启动失败
+    - The `workspaceFolder` in `devcontainer.json` must match the volume mount path in `docker-compose.yml`.
+    - Current configuration: `/workspaces/demo-playground`
 
-1. 检查 MySQL 是否正常运行：
+2.  **Use Dynamic Path Detection in Scripts**:
+    - All scripts should automatically detect the project root directory and not rely on hardcoded paths.
+    - This ensures they work correctly even if the directory structure changes.
 
-   ```bash
-   docker-compose ps
-   ```
+### Application Startup Failure
 
-2. 检查应用日志：
+1.  Check if MySQL is running correctly:
 
-   ```bash
-   tail -f app.log
-   ```
+    ```bash
+    docker-compose ps
+    ```
 
-3. 重启服务：
-   ```bash
-   docker-compose restart mysql
-   ./restart-app.sh
-   ```
+2.  Check the application logs:
 
-### 端口访问问题
+    ```bash
+    tail -f app.log
+    ```
 
-- 确保 Codespaces 正确转发了 8083 端口
-- 在 VS Code 中查看 "PORTS" 标签页
-- 端口可能需要几分钟才能生效
+3.  Restart the services:
+    ```bash
+    docker-compose restart mysql
+    ./restart-app.sh
+    ```
 
-### 数据库连接问题
+### Port Access Issues
+
+- Ensure that port 8083 is correctly forwarded in Codespaces.
+- Check the "PORTS" tab in VS Code.
+- It may take a few minutes for the port to become active.
+
+### Database Connection Issues
 
 ```bash
-# 检查网络连接
+# Check network connectivity
 nc -z mysql 3306
 
-# 重置数据库
+# Reset the database
 docker-compose down
 docker-compose up -d mysql
 ```
 
-## 📝 环境变量
+## 📝 Environment Variables
 
-应用使用以下数据库连接配置：
+The application uses the following database connection settings:
 
 - **URL**: `jdbc:mysql://mysql:3306/testpath`
 - **Username**: `root`
 - **Password**: `root`
 
-## 🛠 自定义配置
+## 🛠 Custom Configuration
 
-如需修改配置，请编辑：
+To modify the configuration, please edit:
 
-- `.devcontainer/devcontainer.json` - Dev Container 配置
-- `.devcontainer/startup.sh` - 启动脚本
-- `app/src/main/resources/application.yml` - Spring Boot 配置
+- `.devcontainer/devcontainer.json` - Dev Container configuration
+- `.devcontainer/startup.sh` - Startup script
+- `app/src/main/resources/application.yml` - Spring Boot configuration

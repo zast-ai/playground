@@ -1,79 +1,79 @@
 # playground
 
-一个基于 Spring Boot 和 MySQL 的演示项目，支持本地开发和 GitHub Codespaces 云端开发。
+A demo project based on Spring Boot and MySQL, supporting both local development and cloud development with GitHub Codespaces.
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 方式一：GitHub Codespaces（推荐）
+### Option 1: GitHub Codespaces (Recommended)
 
-1. **一键启动**：
+1.  **One-Click Launch**:
 
-   - 点击仓库页面的 "Code" -> "Codespaces" -> "Create codespace"
-   - 或访问：`https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=YOUR_REPO`
+    - Click "Code" -> "Codespaces" -> "Create codespace" on the repository page.
+    - Or visit: `https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=YOUR_REPO`
 
-2. **自动配置**：
+2.  **Automatic Configuration**:
 
-   - 系统会自动启动 MySQL 数据库
-   - 自动构建和启动 Spring Boot 应用
-   - 无需任何手动配置
+    - The system will automatically start the MySQL database.
+    - It will also automatically build and launch the Spring Boot application.
+    - No manual configuration is needed.
 
-3. **访问应用**：
-   - 等待启动完成后，VS Code 会提示端口转发
-   - 点击弹出的链接或在 "PORTS" 标签页中找到 8083 端口
+3.  **Access the Application**:
+    - After the startup is complete, VS Code will prompt for port forwarding.
+    - Click the pop-up link or find port 8083 in the "PORTS" tab.
 
-### 方式二：本地 Docker 开发
+### Option 2: Local Docker Development
 
-1. Start the application using Docker Compose:
+1.  Start the application using Docker Compose:
 
-```bash
-docker-compose up -d
-```
+    ```bash
+    docker-compose up -d
+    ```
 
-2. Access the application:
+2.  Access the application:
 
-- URL: http://localhost:8083
+    - URL: http://localhost:8083
 
-### 方式三：VS Code Dev Container
+### Option 3: VS Code Dev Container
 
-1. 安装 "Dev Containers" 扩展
-2. 按 `Ctrl+Shift+P` -> 选择 "Dev Containers: Reopen in Container"
-3. 容器启动后应用将自动运行
+1.  Install the "Dev Containers" extension.
+2.  Press `Ctrl+Shift+P` -> select "Dev Containers: Reopen in Container".
+3.  The application will run automatically after the container starts.
 
-## 🔐 登录信息
+## 🔐 Login Credentials
 
 - Username: `admin`
 - Password: `admin`
 
-## 🛠 开发工具
+## 🛠 Development Tools
 
-### 有用的命令
+### Useful Commands
 
 ```bash
-# 查看应用日志
+# View application logs
 tail -f app.log
 
-# 重启应用
+# Restart the application
 ./restart-app.sh
 
-# 手动构建项目
+# Build the project manually
 cd app && mvn clean install
 
-# 手动启动应用
+# Start the application manually
 cd app && mvn spring-boot:run
 
-# 连接数据库
+# Connect to the database
 docker-compose exec mysql mysql -u root -proot testpath
 
-# 停止应用
+# Stop the application
 kill $(cat app.pid)
 ```
 
-### 端口说明
+### Port Information
 
-- **8083**: Spring Boot 应用
-- **3306**: MySQL 数据库
+- **8083**: Spring Boot Application
+- **3306**: MySQL Database
 
-## 📝 技术栈
+## 📝 Tech Stack
 
 - **Backend**: Spring Boot 2.x, Java 8
 - **Database**: MySQL 8.0
@@ -81,22 +81,24 @@ kill $(cat app.pid)
 - **Build**: Maven
 - **Container**: Docker & Docker Compose
 
-## 🏗 项目架构
+## 🏗 Project Architecture
 
-### Docker 配置说明
+### Docker Configuration Explained
 
-项目包含两套 Docker 配置，分别用于不同环境：
+This project includes two sets of Docker configurations for different environments:
 
-**开发环境**（Codespaces/Dev Container）：
-- 配置：`.devcontainer/docker-compose.yml` + `.devcontainer/Dockerfile`
-- 特点：包含开发工具、vscode 用户、完整 Java 环境
-- 用途：GitHub Codespaces、VS Code Dev Container
+**Development Environment** (Codespaces/Dev Container):
 
-**生产环境**：
-- 配置：`docker-compose.yml` + `app/Dockerfile`
-- 特点：精简镜像、多阶段构建、只含运行时
-- 用途：生产部署、本地快速启动
+- **Configuration**: `.devcontainer/docker-compose.yml` + `.devcontainer/Dockerfile`
+- **Features**: Includes development tools, the `vscode` user, and a full Java environment.
+- **Use Case**: GitHub Codespaces, VS Code Dev Container.
 
-## 🐛 故障排除
+**Production Environment**:
 
-详细的故障排除指南请参考：[Dev Container README](.devcontainer/README.md)
+- **Configuration**: `docker-compose.yml` + `app/Dockerfile`
+- **Features**: Minimalist image, multi-stage builds, runtime only.
+- **Use Case**: Production deployment, quick local start.
+
+## 🐛 Troubleshooting
+
+For a detailed troubleshooting guide, please refer to the [Dev Container README](.devcontainer/README.md).
