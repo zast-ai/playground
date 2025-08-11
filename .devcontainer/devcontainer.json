@@ -6,6 +6,10 @@
   
   "forwardPorts": [8083],
 
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli": {}
+  },
+
   "portsAttributes": {
     "8083": {
       "label": "Spring Boot App",
@@ -18,7 +22,7 @@
   },
   
   "postAttachCommand": {
-    "start-app": "cd app && mvn spring-boot:run"
+    "start-and-poll": "cd app && (mvn spring-boot:run &) && echo 'Server starting in background...' && while ! ss -tln | grep -q ':8083'; do echo 'Waiting for port 8083 to be ready...'; sleep 2; done && echo 'Port 8083 is ready! Setting to public.' && gh codespace ports visibility 8083:public -c \"$CODESPACE_NAME\" && echo 'Fetching public URL...' && PUBLIC_URL=$(gh codespace ports --json publicUrl -q '.[] | select(.portNumber==8083) | .publicUrl') && while ! curl -s -o /dev/null -I -w \"%{http_code}\" \"$PUBLIC_URL\" | grep -q \"[234]..\"; do echo \"Waiting for public URL ($PUBLIC_URL) to become live...\"; sleep 2; done && echo 'Public URL is live! Opening in browser...' && gh browse -p 8083"
   },
 
   "customizations": {
