@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
+      - ../app/src/main/resources/static:/app/static
       - ..:/workspaces/demo-playground:cached
     command: sleep infinity
     environment:
