@@ -32,7 +32,8 @@
     },
     "codespaces": {
       "openFiles": [
-        "README.md"
+        "README.md",
+        "app/src/main/resources/static/.well-known/hash.txt"
       ]
     }
   },
