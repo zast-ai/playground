@@ -29,11 +29,6 @@ public class Benchmark02 {
             Path basePath = Paths.get(BASE_PATH).toAbsolutePath().normalize();
             Path dirPath = basePath.resolve(directory).normalize();
             Path filePath = dirPath.resolve(filename);
-
-            if (!Files.exists(filePath) || !Files.isRegularFile(filePath)) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("File not found in the specified directory.");
-            }
             String content = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8);
             return ResponseEntity.ok(content);
         } catch (Exception e) {
